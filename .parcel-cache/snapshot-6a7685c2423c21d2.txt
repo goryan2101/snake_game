@@ -1,6 +1,6 @@
 7849
 43/home/yehor/prog/js/snake_game/package.json1735566772699918717 0
-39/home/yehor/prog/js/snake_game/index.ts1735575077679293291 0
+39/home/yehor/prog/js/snake_game/index.ts1735579482905318986 0
 65/home/yehor/prog/js/snake_game/node_modules/shebang-regex/license1735566772563248002 0
 66/home/yehor/prog/js/snake_game/node_modules/shebang-regex/index.js1735566772563248002 0
 68/home/yehor/prog/js/snake_game/node_modules/shebang-regex/index.d.ts1735566772563248002 0
@@ -3473,7 +3473,7 @@
 72/home/yehor/prog/js/snake_game/node_modules/json-schema-traverse/LICENSE1735566772363242078 0
 100/home/yehor/prog/js/snake_game/node_modules/@typescript-eslint/utils/dist/ast-utils/helpers.d.ts.map1735566772169903018 0
 126/home/yehor/prog/js/snake_game/node_modules/@typescript-eslint/type-utils/dist/typeOrValueSpecifiers/specifierNameMatches.d.ts1735566772149902425 0
-57/home/yehor/prog/js/snake_game/dist/index.8e9bd240.js.map1735575078242634409 0
+57/home/yehor/prog/js/snake_game/dist/index.8e9bd240.js.map1735579483068657777 0
 78/home/yehor/prog/js/snake_game/node_modules/caniuse-lite/data/features/xhr2.js1735566772226571363 0
 76/home/yehor/prog/js/snake_game/node_modules/htmlnano/docs/versioned_sidebars1735566772336574621 1
 85/home/yehor/prog/js/snake_game/node_modules/eslint/lib/linter/node-event-generator.js1735566772279906276 0
@@ -3643,7 +3643,7 @@
 79/home/yehor/prog/js/snake_game/node_modules/type-fest/source/literal-union.d.ts1735566772569914866 0
 86/home/yehor/prog/js/snake_game/node_modules/@typescript-eslint/scope-manager/README.md1735566772116568105 0
 100/home/yehor/prog/js/snake_game/node_modules/lmdb/dependencies/lmdb-data-v1/libraries/liblmdb/mtest.c1735566772503246225 0
-30/home/yehor/prog/js/snake_game1735566772699918717 1
+30/home/yehor/prog/js/snake_game1735577709824737826 1
 120/home/yehor/prog/js/snake_game/node_modules/@typescript-eslint/scope-manager/dist/definition/TSEnumMemberDefinition.d.ts1735566772119901537 0
 80/home/yehor/prog/js/snake_game/node_modules/fast-json-stable-stringify/benchmark1735566772323240893 1
 51/home/yehor/prog/js/snake_game/node_modules/js-yaml1735566772363242078 1
@@ -3993,7 +3993,7 @@
 77/home/yehor/prog/js/snake_game/node_modules/caniuse-lite/data/features/av1.js1735566772196570474 0
 64/home/yehor/prog/js/snake_game/node_modules/msgpackr/SECURITY.md1735566772523246817 0
 75/home/yehor/prog/js/snake_game/node_modules/@parcel/utils/src/getRootDir.js1735566771286543526 0
-54/home/yehor/prog/js/snake_game/dist/snake.0323a062.ico1735575078112632613 0
+54/home/yehor/prog/js/snake_game/dist/snake.0323a062.ico1735578206991053371 0
 63/home/yehor/prog/js/snake_game/node_modules/lmdb/src/writer.cpp1735566772516579953 0
 63/home/yehor/prog/js/snake_game/node_modules/weak-lru-cache/dist1735566772699918717 1
 61/home/yehor/prog/js/snake_game/node_modules/eslint/lib/config1735566772276572844 1
@@ -4123,7 +4123,7 @@
 68/home/yehor/prog/js/snake_game/node_modules/jquery/src/traversing.js1735566772356575214 0
 69/home/yehor/prog/js/snake_game/node_modules/@swc/helpers/cjs/_set.cjs1735566772059899760 0
 98/home/yehor/prog/js/snake_game/node_modules/@typescript-eslint/utils/dist/ast-utils/index.d.ts.map1735566772169903018 0
-35/home/yehor/prog/js/snake_game/dist1735575078302635239 1
+35/home/yehor/prog/js/snake_game/dist1735579483071991222 1
 79/home/yehor/prog/js/snake_game/node_modules/typescript/lib/lib.es2024.full.d.ts1735566772629916643 0
 70/home/yehor/prog/js/snake_game/node_modules/entities/lib/esm/escape.js1735566772266572548 0
 75/home/yehor/prog/js/snake_game/node_modules/caniuse-lite/data/regions/VC.js1735566772243238523 0
@@ -6079,7 +6079,7 @@
 99/home/yehor/prog/js/snake_game/node_modules/@parcel/runtime-js/src/helpers/browser/esm-js-loader.js1735566769763165099 0
 104/home/yehor/prog/js/snake_game/node_modules/@typescript-eslint/scope-manager/dist/lib/es2019.intl.js.map1735566772126568401 0
 80/home/yehor/prog/js/snake_game/node_modules/eslint/lib/rules/object-shorthand.js1735566772303240301 0
-46/home/yehor/prog/js/snake_game/dist/index.html1735575078299301859 0
+46/home/yehor/prog/js/snake_game/dist/index.html1735578207127727902 0
 97/home/yehor/prog/js/snake_game/node_modules/@typescript-eslint/scope-manager/dist/lib/es2024.d.ts1735566772133235265 0
 70/home/yehor/prog/js/snake_game/node_modules/jquery/src/core/support.js1735566772353241782 0
 104/home/yehor/prog/js/snake_game/node_modules/@typescript-eslint/scope-manager/dist/lib/es2019.string.d.ts1735566772126568401 0
@@ -7734,7 +7734,7 @@
 64/home/yehor/prog/js/snake_game/node_modules/posthtml-render/dist1735566772543247410 1
 79/home/yehor/prog/js/snake_game/node_modules/@parcel/config-default/package.json1735566769699829892 0
 57/home/yehor/prog/js/snake_game/node_modules/parent-module1735566772539913978 1
-53/home/yehor/prog/js/snake_game/dist/index.8e9bd240.js1735575078229300892 0
+53/home/yehor/prog/js/snake_game/dist/index.8e9bd240.js1735579483061990888 0
 72/home/yehor/prog/js/snake_game/node_modules/posthtml-render/package.json1735566772543247410 0
 80/home/yehor/prog/js/snake_game/node_modules/cosmiconfig/dist/ExplorerSync.js.map1735566772253238820 0
 68/home/yehor/prog/js/snake_game/node_modules/fast-deep-equal/react.js1735566772319907461 0

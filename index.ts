@@ -8,6 +8,8 @@ const blockSize = 10
 const widthInBlocks = width / blockSize
 const heightInBlocks = height / blockSize
 let score = 0
+let animationTime = 100
+let isGameOver = false
 
 enum Direction {
     Right,
@@ -58,7 +60,17 @@ class Snake {
     }
 
     public draw() {
-        this.segments.forEach((i) => { i.drawSquare("Blue") })
+        for (let i = 0; i < this.segments.length; i++) {
+            let color: string
+            if (i === 0) {
+                color = "LimeGreen"
+            } else if (i % 2 === 0) {
+                color = "Yellow"
+            } else {
+                color = "Blue"
+            }
+            this.segments[i].drawSquare(color)
+        }
     }
 
     public move() {
@@ -80,6 +92,7 @@ class Snake {
 
         if (this.checkCollision(newHead)) {
             gameOver()
+            isGameOver = true
             return
         }
 
@@ -88,6 +101,10 @@ class Snake {
         if (newHead.equeal(apple.position)) {
             score++
             apple.move()
+            if (animationTime !== 1) {
+                animationTime -= 3
+                console.log("Animation time: " + animationTime)
+            }
         } else {
             this.segments.pop()     
         }
@@ -120,12 +137,18 @@ class Apple {
     }
 
     public draw() {
-        this.position.drawCircle("LimeGreen")
+        this.position.drawCircle("Red")
     }
 
     public move() {
-        this.position = new Block(Math.floor(Math.random() * (widthInBlocks - 2)) + 1,
-                                  Math.floor(Math.random() * (heightInBlocks - 2)) + 1)
+        let newPosition;
+        do {
+            newPosition = new Block(
+                Math.floor(Math.random() * (widthInBlocks - 2)) + 1,
+                Math.floor(Math.random() * (heightInBlocks - 2)) + 1
+            );
+        } while (snake.segments.some(segment => segment.equeal(newPosition)));
+        this.position = newPosition;
     }
 }
 
@@ -146,7 +169,6 @@ function drawScore() {
 }
 
 function gameOver() {
-    clearInterval(intervalId)
     ctx.font = "60px Courier"
     ctx.fillStyle = "Black"
     ctx.textAlign = "center"
@@ -173,6 +195,22 @@ function keyToDirection(key: string): Direction {
     }
 }
 
+function drawChessboard() {
+    for (let row = 0; row < heightInBlocks; row++) {
+        for (let col = 0; col < widthInBlocks; col++) {
+            if (row % 2 === 0) {
+                if (col % 2 !== 0) {
+                    new Block(col, row).drawSquare("LightGray")
+                }
+            } else {
+                if (col % 2 === 0) {
+                    new Block(col, row).drawSquare("LightGray")
+                }
+            }
+        }
+    }
+}
+
 const snake = new Snake()
 const apple = new Apple()
 
@@ -183,12 +221,19 @@ $("body").on("keydown", function (e) {
     console.log("Direction in tracker: " + dir)
 })
 
-const intervalId = setInterval(function () {
+const gameLoop = function () {
     ctx.clearRect(0, 0, width, height)
+    drawChessboard()
     drawScore()
     snake.move()
     snake.draw()
     apple.draw()
     drawBorder()
     console.log("Snake direction: " + snake.direction.toString())
-}, 100)
+    if (isGameOver) {
+        return
+    }
+    setTimeout(gameLoop, animationTime)
+}
+
+gameLoop()

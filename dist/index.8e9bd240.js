@@ -607,6 +607,8 @@ const blockSize = 10;
 const widthInBlocks = width / blockSize;
 const heightInBlocks = height / blockSize;
 let score = 0;
+let animationTime = 100;
+let isGameOver = false;
 var Direction = /*#__PURE__*/ function(Direction) {
     Direction[Direction["Right"] = 0] = "Right";
     Direction[Direction["Left"] = 1] = "Left";
@@ -646,9 +648,13 @@ class Snake {
         this.nextDirection = 0;
     }
     draw() {
-        this.segments.forEach((i)=>{
-            i.drawSquare("Blue");
-        });
+        for(let i = 0; i < this.segments.length; i++){
+            let color;
+            if (i === 0) color = "LimeGreen";
+            else if (i % 2 === 0) color = "Yellow";
+            else color = "Blue";
+            this.segments[i].drawSquare(color);
+        }
     }
     move() {
         const head = this.segments[0];
@@ -661,12 +667,17 @@ class Snake {
         else newHead = new Block(1, 1);
         if (this.checkCollision(newHead)) {
             gameOver();
+            isGameOver = true;
             return;
         }
         this.segments.unshift(newHead);
         if (newHead.equeal(apple.position)) {
             score++;
             apple.move();
+            if (animationTime !== 1) {
+                animationTime -= 3;
+                console.log("Animation time: " + animationTime);
+            }
         } else this.segments.pop();
     }
     checkCollision(head) {
@@ -680,7 +691,7 @@ class Snake {
         else if (this.direction === 2 && newDirection === 3) return;
         else if (this.direction === 1 && newDirection === 0) return;
         else if (this.direction === 0 && newDirection === 1) return;
-        this.direction = newDirection;
+        this.nextDirection = newDirection;
     }
 }
 class Apple {
@@ -688,10 +699,13 @@ class Apple {
         this.position = new Block(8, 5);
     }
     draw() {
-        this.position.drawCircle("LimeGreen");
+        this.position.drawCircle("Red");
     }
     move() {
-        this.position = new Block(Math.floor(Math.random() * (widthInBlocks - 2)) + 1, Math.floor(Math.random() * (heightInBlocks - 2)) + 1);
+        let newPosition;
+        do newPosition = new Block(Math.floor(Math.random() * (widthInBlocks - 2)) + 1, Math.floor(Math.random() * (heightInBlocks - 2)) + 1);
+        while (snake.segments.some((segment)=>segment.equeal(newPosition)));
+        this.position = newPosition;
     }
 }
 function drawBorder() {
@@ -709,68 +723,60 @@ function drawScore() {
     ctx.fillText("Score: " + score.toString(), blockSize + 1, blockSize + 1);
 }
 function gameOver() {
-    clearInterval(intervalId);
     ctx.font = "60px Courier";
     ctx.fillStyle = "Black";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText("Game Over", width / 2, height / 2);
 }
+function keyToDirection(key) {
+    switch(key){
+        case "w":
+        case "ArrowUp":
+            return 2;
+        case "s":
+        case "ArrowDown":
+            return 3;
+        case "a":
+        case "ArrowLeft":
+            return 1;
+        case "d":
+        case "ArrowRight":
+            return 0;
+        default:
+            return snake.direction;
+    }
+}
+function drawChessboard() {
+    for(let row = 0; row < heightInBlocks; row++)for(let col = 0; col < widthInBlocks; col++){
+        if (row % 2 === 0) {
+            if (col % 2 !== 0) new Block(col, row).drawSquare("LightGray");
+        } else if (col % 2 === 0) new Block(col, row).drawSquare("LightGray");
+    }
+}
 const snake = new Snake();
 const apple = new Apple();
-const stringsToDir = {
-    "w": 2,
-    "a": 1,
-    "s": 3,
-    "d": 0
-};
 (0, _jqueryDefault.default)("body").on("keydown", function(e) {
-    const dir = stringsToDir[e.key];
+    const dir = keyToDirection(e.key);
     snake.setDirection(dir);
-    console.log(e.key);
-    console.log(dir);
+    console.log("Key: " + e.key);
+    console.log("Direction in tracker: " + dir);
 });
-const intervalId = setInterval(function() {
+const gameLoop = function() {
     ctx.clearRect(0, 0, width, height);
+    drawChessboard();
     drawScore();
     snake.move();
     snake.draw();
     apple.draw();
     drawBorder();
     console.log("Snake direction: " + snake.direction.toString());
-}, 100);
+    if (isGameOver) return;
+    setTimeout(gameLoop, animationTime);
+};
+gameLoop();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","jquery":"hgMhh"}],"gkKU3":[function(require,module,exports,__globalThis) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"hgMhh":[function(require,module,exports,__globalThis) {
+},{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hgMhh":[function(require,module,exports,__globalThis) {
 /*!
  * jQuery JavaScript Library v3.7.1
  * https://jquery.com/
@@ -7470,6 +7476,36 @@ exports.export = function(dest, destName, get) {
     if (typeof noGlobal === "undefined") window1.jQuery = window1.$ = jQuery;
     return jQuery;
 });
+
+},{}],"gkKU3":[function(require,module,exports,__globalThis) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
 
 },{}]},["iYiw7","1jwFz"], "1jwFz", "parcelRequire94c2")
 
