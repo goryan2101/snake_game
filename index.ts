@@ -167,6 +167,15 @@ const intervalId = setInterval(function () {
     drawBorder()
 }, 100)
 
+const stringsToDir = {
+    "ArrowDown": Direction.Down,
+    "ArrowUp": Direction.Up,
+    "ArrowRight": Direction.Right,
+    "ArrowLeft": Direction.Left
+}
+
 $("body").on("keydown", function (e) {
-    console.log(e.key)
+    if (stringsToDir[e.key] !== undefined) {
+        snake.setDirection(stringsToDir[e.key])
+    }
 })
