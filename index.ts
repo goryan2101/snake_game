@@ -58,7 +58,7 @@ class Snake {
     }
 
     public draw() {
-        this.segments.forEach((i) => {i.drawSquare("Blue")})
+        this.segments.forEach((i) => { i.drawSquare("Blue") })
     }
 
     public move() {
@@ -78,10 +78,10 @@ class Snake {
             newHead = new Block(1, 1)
         }
 
-        // if (this.checkCollision(newHead)) {
-        //     gameOver()
-        //     return
-        // }
+        if (this.checkCollision(newHead)) {
+            gameOver()
+            return
+        }
 
         this.segments.unshift(newHead)
 
@@ -96,13 +96,37 @@ class Snake {
     }
 
     public checkCollision(head: Block) {
-        let selfCollision: boolean
+        let selfCollision = false
         for (let i = 0; i < this.segments.length; i++) {
             if (head.equeal(this.segments[i])) {
                 selfCollision = true
             }
         }
         const wallCollision = (head.col === 0) || (head.row === 0) || (head.col === widthInBlocks - 1) || (head.row === heightInBlocks - 1)
+        return wallCollision || selfCollision
+    }
+
+    public setDirection(newDirection: Direction) {
+        if (this.direction === Direction.Down && newDirection === Direction.Up) { return } 
+        else if (this.direction === Direction.Up && newDirection === Direction.Down) { return }
+        else if (this.direction === Direction.Left && newDirection === Direction.Right) { return }
+        else if (this.direction === Direction.Right && newDirection === Direction.Left) { return }
+        this.direction = newDirection
+    }
+}
+
+class Apple {
+    position: Block
+    constructor() {
+        this.position = new Block(10, 10)
+    }
+
+    public draw() {
+        this.position.drawCircle("LimeGreen")
+    }
+
+    public move() {
+        
     }
 }
 
@@ -131,8 +155,6 @@ function gameOver() {
     ctx.fillText("Game Over", width / 2, height / 2)
 }
 
-const sampleBlock = new Block(20, 20)
-const sampleCircle = new Block(4, 3)
 const snake = new Snake()
 
 const intervalId = setInterval(function () {
@@ -141,6 +163,4 @@ const intervalId = setInterval(function () {
     drawScore()
     drawBorder()
     snake.draw()
-    sampleBlock.drawSquare("Red")
-    sampleCircle.drawCircle("Green")
 }, 100)
