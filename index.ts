@@ -73,7 +73,7 @@ class Snake {
         } else if (this.direction === Direction.Up) {
             newHead = new Block(head.col, head.row - 1)
         } else if (this.direction === Direction.Left) {
-            newHead = new Block(head.col + 1, head.row)
+            newHead = new Block(head.col - 1, head.row)
         } else {
             newHead = new Block(1, 1)
         }
@@ -109,15 +109,14 @@ class Snake {
         else if (this.direction === Direction.Up && newDirection === Direction.Down) { return }
         else if (this.direction === Direction.Left && newDirection === Direction.Right) { return }
         else if (this.direction === Direction.Right && newDirection === Direction.Left) { return }
-        this.direction = newDirection
+        this.nextDirection = newDirection
     }
 }
 
 class Apple {
     position: Block
     constructor() {
-        this.position = new Block(Math.floor(Math.random() * (widthInBlocks - 2)) + 1,
-                                  Math.floor(Math.random() * (heightInBlocks - 2)) + 1)
+        this.position = new Block(8, 5)
     }
 
     public draw() {
@@ -155,8 +154,34 @@ function gameOver() {
     ctx.fillText("Game Over", width / 2, height / 2)
 }
 
+function keyToDirection(key: string): Direction {
+    switch (key) {
+        case "w":
+        case "ArrowUp":
+            return Direction.Up
+        case "s":
+        case "ArrowDown":
+            return Direction.Down
+        case "a":
+        case "ArrowLeft":
+            return Direction.Left
+        case "d":
+        case "ArrowRight":
+            return Direction.Right
+        default:
+            return snake.direction
+    }
+}
+
 const snake = new Snake()
 const apple = new Apple()
+
+$("body").on("keydown", function (e) {
+    const dir = keyToDirection(e.key)
+    snake.setDirection(dir)
+    console.log("Key: " + e.key)
+    console.log("Direction in tracker: " + dir)
+})
 
 const intervalId = setInterval(function () {
     ctx.clearRect(0, 0, width, height)
@@ -165,17 +190,5 @@ const intervalId = setInterval(function () {
     snake.draw()
     apple.draw()
     drawBorder()
+    console.log("Snake direction: " + snake.direction.toString())
 }, 100)
-
-const stringsToDir = {
-    "ArrowDown": Direction.Down,
-    "ArrowUp": Direction.Up,
-    "ArrowRight": Direction.Right,
-    "ArrowLeft": Direction.Left
-}
-
-$("body").on("keydown", function (e) {
-    if (stringsToDir[e.key] !== undefined) {
-        snake.setDirection(stringsToDir[e.key])
-    }
-})

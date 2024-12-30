@@ -657,7 +657,7 @@ class Snake {
         if (this.direction === 0) newHead = new Block(head.col + 1, head.row);
         else if (this.direction === 3) newHead = new Block(head.col, head.row + 1);
         else if (this.direction === 2) newHead = new Block(head.col, head.row - 1);
-        else if (this.direction === 1) newHead = new Block(head.col + 1, head.row);
+        else if (this.direction === 1) newHead = new Block(head.col - 1, head.row);
         else newHead = new Block(1, 1);
         if (this.checkCollision(newHead)) {
             gameOver();
@@ -685,7 +685,7 @@ class Snake {
 }
 class Apple {
     constructor(){
-        this.position = new Block(Math.floor(Math.random() * (widthInBlocks - 2)) + 1, Math.floor(Math.random() * (heightInBlocks - 2)) + 1);
+        this.position = new Block(8, 5);
     }
     draw() {
         this.position.drawCircle("LimeGreen");
@@ -718,6 +718,18 @@ function gameOver() {
 }
 const snake = new Snake();
 const apple = new Apple();
+const stringsToDir = {
+    "w": 2,
+    "a": 1,
+    "s": 3,
+    "d": 0
+};
+(0, _jqueryDefault.default)("body").on("keydown", function(e) {
+    const dir = stringsToDir[e.key];
+    snake.setDirection(dir);
+    console.log(e.key);
+    console.log(dir);
+});
 const intervalId = setInterval(function() {
     ctx.clearRect(0, 0, width, height);
     drawScore();
@@ -725,16 +737,8 @@ const intervalId = setInterval(function() {
     snake.draw();
     apple.draw();
     drawBorder();
+    console.log("Snake direction: " + snake.direction.toString());
 }, 100);
-const stringsToDir = {
-    "ArrowDown": 3,
-    "ArrowUp": 2,
-    "ArrowRight": 0,
-    "ArrowLeft": 1
-};
-(0, _jqueryDefault.default)("body").on("keydown", function(e) {
-    console.log(e.key);
-});
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","jquery":"hgMhh"}],"gkKU3":[function(require,module,exports,__globalThis) {
 exports.interopDefault = function(a) {
