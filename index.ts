@@ -85,14 +85,12 @@ class Snake {
 
         this.segments.unshift(newHead)
 
-        /*
         if (newHead.equeal(apple.position)) {
             score++
             apple.move()
         } else {
             this.segments.pop()     
         }
-        */
     }
 
     public checkCollision(head: Block) {
@@ -118,7 +116,8 @@ class Snake {
 class Apple {
     position: Block
     constructor() {
-        this.position = new Block(10, 10)
+        this.position = new Block(Math.floor(Math.random() * (widthInBlocks - 2)) + 1,
+                                  Math.floor(Math.random() * (heightInBlocks - 2)) + 1)
     }
 
     public draw() {
@@ -126,7 +125,8 @@ class Apple {
     }
 
     public move() {
-        
+        this.position = new Block(Math.floor(Math.random() * (widthInBlocks - 2)) + 1,
+                                  Math.floor(Math.random() * (heightInBlocks - 2)) + 1)
     }
 }
 
@@ -156,11 +156,17 @@ function gameOver() {
 }
 
 const snake = new Snake()
+const apple = new Apple()
 
 const intervalId = setInterval(function () {
     ctx.clearRect(0, 0, width, height)
-    score++
     drawScore()
-    drawBorder()
+    snake.move()
     snake.draw()
+    apple.draw()
+    drawBorder()
 }, 100)
+
+$("body").on("keydown", function (e) {
+    console.log(e.key)
+})
