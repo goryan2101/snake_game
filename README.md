@@ -34,5 +34,7 @@ To launch the project, type the command:
 npx parcel ./index.html
 ```
 Output:
+
 ![Output](image-1.png)
+
 Paste this URL in your browser and enjoy!
