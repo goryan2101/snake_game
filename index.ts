@@ -8,7 +8,7 @@ const blockSize = 10
 const widthInBlocks = width / blockSize
 const heightInBlocks = height / blockSize
 let score = 0
-let animationTime = 100
+let animationTime = 200
 let isGameOver = false
 
 enum Direction {
