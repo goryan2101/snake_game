@@ -8,8 +8,11 @@ const blockSize = 10
 const widthInBlocks = width / blockSize
 const heightInBlocks = height / blockSize
 let score = 0
-let animationTime = 200
+let animationTime: number
+let animationTimeMinus: number
 let isGameOver = false
+const difficulties = ["easy", "medium", "hard"]
+let difficulty: string
 
 enum Direction {
     Right,
@@ -102,7 +105,7 @@ class Snake {
             score++
             apple.move()
             if (animationTime !== 1) {
-                animationTime -= 3
+                animationTime -= animationTimeMinus
                 console.log("Animation time: " + animationTime)
             }
         } else {
@@ -176,6 +179,30 @@ function gameOver() {
     ctx.fillText("Game Over", width / 2, height / 2)
 }
 
+function askDifficulty() {
+    const input = prompt("Type difficulty (easy, medium, hard): ")
+    if (input === null) {
+        askDifficulty()
+    } else if (difficulties.includes(input)) {
+        difficulty = input
+    } else {
+        askDifficulty()
+    }
+}
+
+function setAnimationTime(d: string) {
+    if (d === "easy") {
+        animationTime = 200
+        animationTimeMinus = 2
+    } else if (d === "medium") {
+        animationTime = 150
+        animationTimeMinus = 4
+    } else if (d === "hard") {
+        animationTime = 100
+        animationTimeMinus = 5
+    }
+}
+
 function keyToDirection(key: string): Direction {
     switch (key) {
         case "w":
@@ -221,6 +248,8 @@ $("body").on("keydown", function (e) {
     console.log("Direction in tracker: " + dir)
 })
 
+askDifficulty()
+setAnimationTime(difficulty)
 const gameLoop = function () {
     ctx.clearRect(0, 0, width, height)
     drawChessboard()
